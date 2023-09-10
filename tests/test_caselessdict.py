@@ -77,10 +77,10 @@ class TestCaselessDict(object):
         assert mapping.get("LOWER") == copy(mapping).get("lower")
 
     def test__eq__(self):
-        CaselessDict({1: 2}) == CaselessDict({1: 2})
-        CaselessDict({1: 2}) != CaselessDict({3: 4})
-        CaselessDict({"lower": "UPPER"}) == CaselessDict({"LOWER": "UPPER"})
-        CaselessDict({1: 2, "lower": "UPPER"}) != CaselessDict({3: 4, "LOWER": "UPPER"})
+        assert CaselessDict({1: 2}) == CaselessDict({1: 2})
+        assert CaselessDict({1: 2}) != CaselessDict({3: 4})
+        assert CaselessDict({"lower": "UPPER"}) == CaselessDict({"LOWER": "UPPER"})
+        assert CaselessDict({1: 2, "lower": "UPPER"}) != CaselessDict({3: 4, "LOWER": "UPPER"})
 
     def test__getitem__(self):
         assert CaselessDict({1: 2})[1] == 2
