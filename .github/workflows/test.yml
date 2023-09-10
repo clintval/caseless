@@ -1,11 +1,11 @@
-name: Python package
+name: Test the Library
 
 on:
   - push
   - pull_request
 
 jobs:
-  test:
+  Test-the-Library:
     runs-on: ubuntu-latest
     strategy:
       matrix:
