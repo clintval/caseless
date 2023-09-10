@@ -5,7 +5,7 @@ on:
   - pull_request
 
 jobs:
-  Test-the-Library:
+  TestAndLint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
