@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "caseless"
+version = "0.1.0"
+description = "A caseless typed dictionary in Python"
+authors = ["clintval <valentine.clint@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+black = "^23.9.0"
+mypy = "^1.5.1"
+ruff = "^0.0.287"
+pytest-ruff = "^0.1.1"
+tox = "^4.11.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+isolated_build = True
+envlist = py38,py39,py310,py311
+
+[testenv]
+allowlist_externals = poetry
+commands =
+  poetry install -v
+  poetry run pytest tests/
+"""
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--ruff"
+testpaths = ["caseless", "tests"]
+
+[tool.ruff]
+select = ["C901", "E", "F", "W", "Q"]
+line-length = 120
