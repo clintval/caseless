@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "caseless"
-version = "0.3.0"
+version = "0.4.0"
 description = "A caseless typed dictionary in Python"
 authors = ["Clint Valentine <valentine.clint@gmail.com>"]
 license = "MIT"
