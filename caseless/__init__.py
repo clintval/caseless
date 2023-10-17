@@ -23,13 +23,9 @@ V = TypeVar("V")
 class CaselessDict(Mapping[K, V]):
     """A dictionary with case-insensitive string getters."""
 
-    def __init__(
-            self, *args: Union[Mapping[K, V], Collection[Tuple[K, V]]], **kwargs: Mapping[K, V]
-    ) -> None:
+    def __init__(self, *args: Union[Mapping[K, V], Collection[Tuple[K, V]]], **kwargs: Mapping[K, V]) -> None:
         self._map: Dict[K, V] = dict(*args, **kwargs)
-        self._caseless: Dict[str, str] = {
-            k.lower(): k for k, v in self._map.items() if isinstance(k, str)
-        }
+        self._caseless: Dict[str, str] = {k.lower(): k for k, v in self._map.items() if isinstance(k, str)}
         self._hash: int = -1
 
     def __contains__(self, key: object) -> bool:
@@ -46,10 +42,10 @@ class CaselessDict(Mapping[K, V]):
 
     def __eq__(self, other: Any) -> bool:
         """Test if <other> is equal to this class instance."""
-        return (
-            isinstance(other, type(self))
-            and hasattr(other, "__hash__")) and (hash(self) == hash(other)
-            and hasattr(other, "__len__") and len(self) == len(other)
+        return (isinstance(other, type(self)) and hasattr(other, "__hash__")) and (
+            hash(self) == hash(other)
+            and hasattr(other, "__len__")
+            and len(self) == len(other)
             and all([key in other and other[key] == value for key, value in self.items()])
         )
 
@@ -64,7 +60,7 @@ class CaselessDict(Mapping[K, V]):
         """Return a hash of this dictionary using all key-value pairs."""
         if self._hash == -1 and self:
             current: int = 0
-            for (key, value) in self.items():
+            for key, value in self.items():
                 if isinstance(key, str):
                     current ^= hash((key.lower(), value))
                 else:

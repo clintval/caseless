@@ -1,22 +1,45 @@
 [tool.poetry]
 name = "caseless"
-version = "0.4.0"
-description = "A caseless typed dictionary in Python"
-authors = ["Clint Valentine <valentine.clint@gmail.com>"]
+version = "0.5.0"
+description = "A typed dictionary in Python with case-insensitive keys"
 license = "MIT"
+authors = ["Clint Valentine <valentine.clint@gmail.com>"]
 readme = "README.md"
+homepage = "https://github.com/clintval/caseless"
+repository = "https://github.com/clintval/caseless"
+documentation = "https://github.com/clintval/caseless"
+keywords = ["caseless", "case-insensitive", "dictionary", "python"]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
+black = "23.10.0"
 pytest = "^7.4.2"
+pytest-black-ng = "^0.4.1"
 pytest-mypy = "^0.10.3"
 pytest-ruff = "^0.1.1"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/clintval/caseless/issues"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+target-version = ["py38"]
 
 [tool.tox]
 legacy_tox_ini = """
@@ -41,7 +64,7 @@ commands =
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["--mypy", "--ruff"]
+addopts = ["--black", "--mypy", "--ruff"]
 testpaths = ["caseless", "tests"]
 
 [tool.ruff]
