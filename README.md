@@ -6,7 +6,7 @@
 [![MyPy Checked](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-A caseless typed dictionary in Python.
+A typed dictionary in Python with case-insensitive keys.
 
 ```console
 pip install caseless

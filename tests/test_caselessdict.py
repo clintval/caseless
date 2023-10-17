@@ -12,6 +12,7 @@ from caseless import CaselessDict
 
 T = TypeVar("T")
 
+
 def round_trip_pickle(obj: T) -> T:
     temp = NamedTemporaryFile("w", delete=False)
     with open(temp.name, "wb") as handle:
@@ -20,6 +21,7 @@ def round_trip_pickle(obj: T) -> T:
         rehydrated = pickle.load(handle)
     os.remove(temp.name)
     return rehydrated
+
 
 class TestCaselessDict(object):
     def test_isinstance(self):
@@ -97,7 +99,7 @@ class TestCaselessDict(object):
     def test__iter__(self):
         keyvalues = [(1, 2), (3, 4)]
         mapping = CaselessDict(keyvalues)
-        for (actual_key, expected_key) in zip(mapping, dict(keyvalues).keys()):
+        for actual_key, expected_key in zip(mapping, dict(keyvalues).keys()):
             assert actual_key == expected_key
 
     def test__len__(self):
@@ -129,9 +131,7 @@ class TestCaselessDict(object):
 
     def test_fromkeys(self):
         assert CaselessDict.fromkeys([1, 2, 3], default=3) == CaselessDict({1: 3, 2: 3, 3: 3})
-        assert CaselessDict.fromkeys([1, 2, 3], default=None) == CaselessDict(
-            {1: None, 2: None, 3: None}
-        )
+        assert CaselessDict.fromkeys([1, 2, 3], default=None) == CaselessDict({1: None, 2: None, 3: None})
 
     def test_copy(self):
         mapping = CaselessDict({2: 3, 4: 5, "lower": "UPPER"})
@@ -163,9 +163,7 @@ class TestCaselessDict(object):
         mapping = CaselessDict({2: 3, 4: 5, "lower": "UPPER"})
         assert mapping.updated(4, 10) == CaselessDict({2: 3, 4: 10, "lower": "UPPER"})
         assert mapping.updated(6, 7) == CaselessDict({2: 3, 4: 5, 6: 7, "lower": "UPPER"})
-        assert mapping.updated("LOWER", "UPDATED") == CaselessDict(
-            {2: 3, 4: 5, "lower": "UPDATED"}
-        )
+        assert mapping.updated("LOWER", "UPDATED") == CaselessDict({2: 3, 4: 5, "lower": "UPDATED"})
 
     def test_values(self):
         keyvalues = [(1, 2), (3, 4)]
