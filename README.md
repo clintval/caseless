@@ -1,7 +1,7 @@
 # caseless
 
 [![CI](https://github.com/clintval/caseless/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/clintval/caseless/actions/workflows/test.yml)
-[![PyPi Release](https://badge.fury.io/py/caseless.svg)](https://badge.fury.io/py/caseless)'
+[![PyPi Release](https://badge.fury.io/py/caseless.svg)](https://badge.fury.io/py/caseless)
 [![Python Versions](https://img.shields.io/pypi/pyversions/caseless.svg)](https://pypi.python.org/pypi/caseless/)
 [![MyPy Checked](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
