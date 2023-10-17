@@ -1,6 +1,5 @@
 from sys import getsizeof, maxsize
 from typing import Any
-from typing import ClassVar
 from typing import Collection
 from typing import Dict
 from typing import Hashable
@@ -20,25 +19,24 @@ from typing import cast
 K = TypeVar("K", bound=Hashable)
 V = TypeVar("V")
 
+
 class CaselessDict(Mapping[K, V]):
     """A dictionary with case-insensitive string getters."""
-
-    underlying: ClassVar[Type[Dict]] = dict
 
     def __init__(
             self, *args: Union[Mapping[K, V], Collection[Tuple[K, V]]], **kwargs: Mapping[K, V]
     ) -> None:
-        self._map: Dict[K, V] = self.underlying(*args, **kwargs)
+        self._map: Dict[K, V] = dict(*args, **kwargs)
         self._caseless: Dict[str, str] = {
-            k.lower(): k for k, v in self._map.items() if isinstance(k, (bytes, str))
+            k.lower(): k for k, v in self._map.items() if isinstance(k, str)
         }
         self._hash: int = -1
 
-    def __contains__(self, key: K) -> bool:
+    def __contains__(self, key: object) -> bool:
         """Test if <key> is contained within this mapping."""
         return (
             self._caseless[key.lower()] in self._map
-            if (isinstance(key, (bytes, str)) and key.lower() in self._caseless)
+            if (isinstance(key, str) and key.lower() in self._caseless)
             else key in self._map
         )
 
@@ -49,14 +47,15 @@ class CaselessDict(Mapping[K, V]):
     def __eq__(self, other: Any) -> bool:
         """Test if <other> is equal to this class instance."""
         return (
-            (hash(self) == hash(other)) & (self.items() == other.items())
-            if (isinstance(other, type(self)) and hasattr(other, "__hash__"))
-            else False
+            isinstance(other, type(self))
+            and hasattr(other, "__hash__")) and (hash(self) == hash(other)
+            and hasattr(other, "__len__") and len(self) == len(other)
+            and all([key in other and other[key] == value for key, value in self.items()])
         )
 
     def __getitem__(self, key: K) -> Any:
         """Return a value indexed with <key>."""
-        if isinstance(key, (bytes, str)) and key.lower() in self._caseless:
+        if isinstance(key, str) and key.lower() in self._caseless:
             return self._map[cast(K, self._caseless[key.lower()])]
         else:
             return self._map[key]
@@ -66,7 +65,7 @@ class CaselessDict(Mapping[K, V]):
         if self._hash == -1 and self:
             current: int = 0
             for (key, value) in self.items():
-                if isinstance(key, (bytes, str)):
+                if isinstance(key, str):
                     current ^= hash((key.lower(), value))
                 else:
                     current ^= hash((key, value))
@@ -91,7 +90,7 @@ class CaselessDict(Mapping[K, V]):
 
     def __reduce__(self) -> Tuple[Type["CaselessDict"], Tuple[List[Tuple[K, V]]]]:
         """Return a recipe for pickling."""
-        return (type(self), (list(self.items()),))
+        return type(self), (list(self.items()),)
 
     def __repr__(self) -> str:
         """Return a representation of this class instance."""
@@ -115,7 +114,7 @@ class CaselessDict(Mapping[K, V]):
         overrides: Dict[K, V] = {}
         if mapping is not None:
             for k, v in mapping.items():
-                if isinstance(k, (bytes, str)) and k.lower() in self._caseless:
+                if isinstance(k, str) and k.lower() in self._caseless:
                     overrides[cast(K, self._caseless[k.lower()])] = v
                 else:
                     overrides[k] = v
@@ -123,7 +122,7 @@ class CaselessDict(Mapping[K, V]):
 
     def get(self, key: K, default: Optional[Any] = None) -> Union[Any, V]:
         """Return a value indexed with <key> but if that key is not present, return <default>."""
-        if isinstance(key, (bytes, str)) and key.lower() in self._caseless:
+        if isinstance(key, str) and key.lower() in self._caseless:
             caseless_key: K = cast(K, self._caseless[key.lower()])
             return self._map.get(caseless_key, default)
         else:
@@ -133,12 +132,12 @@ class CaselessDict(Mapping[K, V]):
         """Return this mapping as a list of paired key-values."""
         return self._map.items()
 
-    def keys(self) -> KeysView[Hashable]:
+    def keys(self) -> KeysView[K]:
         """Return the keys in insertion order."""
         return self._map.keys()
 
     def updated(self, key: K, value: V) -> "CaselessDict":
-        """Return a shallow copy of this mapping with an key-value pair."""
+        """Return a shallow copy of this mapping with a key-value pair."""
         return self.copy({key: value})
 
     def values(self) -> ValuesView[V]:
