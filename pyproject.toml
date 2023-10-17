@@ -64,7 +64,7 @@ commands =
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = ["--black", "--mypy", "--ruff"]
+addopts = ["--color=yes", "--black", "--mypy", "--ruff"]
 testpaths = ["caseless", "tests"]
 
 [tool.ruff]
