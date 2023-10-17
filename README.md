@@ -9,7 +9,7 @@
 A caseless typed dictionary in Python.
 
 ```console
-❯ pip install caseless
+pip install caseless
 ```
 
 ![Guitar Lake, California](.github/img/cover.jpg)
