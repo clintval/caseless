@@ -1,13 +1,10 @@
 [tool.poetry]
 name = "caseless"
-version = "0.2.0"
+version = "0.3.0"
 description = "A caseless typed dictionary in Python"
 authors = ["Clint Valentine <valentine.clint@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-include = [
-  { path = ".github/img/cover.jpg", format = ["sdist", "wheel"] }
-]
 
 [tool.poetry.dependencies]
 python = "^3.8"
