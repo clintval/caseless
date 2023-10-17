@@ -45,15 +45,15 @@ target-version = ["py38"]
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py38,py39,py310,py311,py312
+envlist = py312,py311,py310,py39,py38
 
 [gh-actions]
 python =
-    3.8: py38
-    3.9: py39
-    3.10: py310
-    3.11: py311
     3.12: py312
+    3.11: py311
+    3.10: py310
+    3.9: py39
+    3.8: py38
 
 [testenv]
 allowlist_externals = poetry

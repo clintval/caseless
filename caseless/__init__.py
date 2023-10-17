@@ -42,8 +42,10 @@ class CaselessDict(Mapping[K, V]):
 
     def __eq__(self, other: Any) -> bool:
         """Test if <other> is equal to this class instance."""
-        return (isinstance(other, type(self)) and hasattr(other, "__hash__")) and (
-            hash(self) == hash(other)
+        return (
+            isinstance(other, type(self))
+            and hasattr(other, "__hash__")
+            and hash(self) == hash(other)
             and hasattr(other, "__len__")
             and len(self) == len(other)
             and all([key in other and other[key] == value for key, value in self.items()])
